@@ -39,10 +39,12 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
 
       if (result?.error) {
         setError(result.error);
+        return;
       }
 
       if (result?.message) {
         setError(result.message);
+        return;
       }
     } catch {
       setError("Something went wrong.");
