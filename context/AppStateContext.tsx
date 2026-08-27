@@ -74,7 +74,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
 
   const login = useCallback((email: string, password: string) => {
     if (!email || !password) {
-      throw new Error("Email and password are required.");
+      return;
     }
     const fallbackName = email.split("@")[0];
     setUser({ name: fallbackName, email });
@@ -82,7 +82,7 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
 
   const signup = useCallback((name: string, email: string, password: string) => {
     if (!name || !email || !password) {
-      throw new Error("Name, email, and password are required.");
+      return;
     }
     setUser({ name, email });
   }, []);
