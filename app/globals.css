@@ -414,6 +414,11 @@ body {
   margin-top: 0;
 }
 
+.notice-text {
+  margin-top: 0.8rem;
+  color: #ffe2b8;
+}
+
 .empty-state {
   border: 1px dashed #ffffff45;
   border-radius: 1rem;

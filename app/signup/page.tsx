@@ -1,13 +1,17 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthForm from "@/components/AuthForm";
 import { useAppState } from "@/context/AppStateContext";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
   const router = useRouter();
   const { signup, user } = useAppState();
+  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
+  const [message, setMessage] = useState<string | null>(null);
 
   return (
     <main>
@@ -25,12 +29,32 @@ export default function SignupPage() {
         ) : (
           <AuthForm
             mode="signup"
-            onSubmit={({ name, email, password }) => {
-              signup(name ?? "", email, password);
-              router.push("/saved");
+            onSubmit={async ({ name, email, password }) => {
+              const { data, error } = await supabase.auth.signUp({
+                email,
+                password,
+                options: {
+                  data: {
+                    name
+                  }
+                }
+              });
+
+              if (error) {
+                throw new Error(error.message);
+              }
+
+              if (data.session) {
+                signup(name ?? "", email, password);
+                router.push("/saved");
+                return;
+              }
+
+              setMessage("Account created. Check your email to confirm your account, then log in.");
             }}
           />
         )}
+        {message ? <p className="notice-text">{message}</p> : null}
         <p className="inline-link">
           Already have an account? <Link href="/login">Log in</Link>
         </p>

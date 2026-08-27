@@ -11,7 +11,7 @@ type AuthFormValues = {
 
 type AuthFormProps = {
   mode: "login" | "signup";
-  onSubmit: (values: AuthFormValues) => void;
+  onSubmit: (values: AuthFormValues) => void | Promise<void>;
 };
 
 export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
@@ -19,28 +19,32 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isSignup = mode === "signup";
 
-  const submitForm = (event: FormEvent) => {
+  const submitForm = async (event: FormEvent) => {
     event.preventDefault();
     setError(null);
+    setIsSubmitting(true);
 
     try {
       if (isSignup) {
         if (!name.trim()) {
           throw new Error("Please enter your name.");
         }
-        onSubmit({ name: name.trim(), email: email.trim(), password });
+        await onSubmit({ name: name.trim(), email: email.trim(), password });
       } else {
-        onSubmit({ email: email.trim(), password });
+        await onSubmit({ email: email.trim(), password });
       }
     } catch (submissionError) {
       if (submissionError instanceof Error) {
         setError(submissionError.message);
-        return;
+      } else {
+        setError("Something went wrong. Please try again.");
       }
-      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -80,8 +84,8 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
 
       {error ? <p className="form-error">{error}</p> : null}
 
-      <button className="button primary" type="submit">
-        {isSignup ? "Create account" : "Log in"}
+      <button className="button primary" type="submit" disabled={isSubmitting}>
+        {isSubmitting ? "Please wait..." : isSignup ? "Create account" : "Log in"}
       </button>
     </form>
   );
