@@ -11,7 +11,6 @@ export default function SignupPage() {
   const router = useRouter();
   const { signup, user } = useAppState();
   const supabase = useMemo(() => createSupabaseBrowserClient(), []);
-  const [message, setMessage] = useState<string | null>(null);
 
   return (
     <main>
@@ -54,7 +53,6 @@ export default function SignupPage() {
             }}
           />
         )}
-        {message ? <p className="notice-text">{message}</p> : null}
         <p className="inline-link">
           Already have an account? <Link href="/login">Log in</Link>
         </p>
