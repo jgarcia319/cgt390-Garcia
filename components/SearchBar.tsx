@@ -11,6 +11,12 @@ type SearchBarProps = {
   compact?: boolean;
 };
 
+type CategoryOption = (typeof listingCategories)[number];
+
+function isCategoryOption(value: string): value is CategoryOption {
+  return listingCategories.some((item) => item === value);
+}
+
 export default function SearchBar({ initialValues, compact = false }: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState(initialValues?.query ?? "");
@@ -67,7 +73,15 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
 
       <label className="field">
         <span>Category</span>
-        <select value={category} onChange={(event) => setCategory(event.target.value)}>
+        <select
+          value={category}
+          onChange={(event) => {
+            const nextValue = event.target.value;
+            if (isCategoryOption(nextValue)) {
+              setCategory(nextValue);
+            }
+          }}
+        >
           {listingCategories.map((item) => (
             <option key={item} value={item}>
               {item}
