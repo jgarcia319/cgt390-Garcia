@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Simple Scaffolded Page</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Simple Scaffolded Page</h1>
+    <p class="lead">A minimal starter page</p>
+  </header>
+  <main>
+    <section id="intro">
+      <h2>Welcome</h2>
+      <p>This is a simple scaffolded page created by the Copilot CLI runtime assistant.</p>
+      <button id="action">Click me</button>
+      <p id="message" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer>
+    <small>&copy; 2026 Your Name</small>
+  </footer>
+  <script>
+    document.getElementById('action').addEventListener('click', function () {
+      const msg = document.getElementById('message');
+      msg.textContent = 'Button clicked at ' + new Date().toLocaleTimeString();
+    });
+  </script>
+</body>
+</html>
