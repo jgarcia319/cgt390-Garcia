@@ -31,23 +31,23 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
     setIsSubmitting(true);
 
     try {
-      if (isSignup) {
-        if (!name.trim()) {
-          throw new Error("Please enter your name.");
-        }
-        await onSubmit({ name: name.trim(), email: email.trim(), password });
-      } else {
-        await onSubmit({ email: email.trim(), password });
+     const result = await onSubmit(
+        isSignup
+          ? { name: name.trim(), email: email.trim(), password }
+          : { email: email.trim(), password }
+      );
+
+      if (result?.error) {
+        setError(result.error);
       }
-    } catch (submissionError) {
-      if (submissionError instanceof Error) {
-        setError(submissionError.message);
-      } else {
-        setError("Something went wrong. Please try again.");
+
+      if (result?.message) {
+        setError(result.message);
       }
-    } finally {
-      setIsSubmitting(false);
+    } catch {
+      setError("Something went wrong.");
     }
+
   };
 
   return (
