@@ -11,7 +11,9 @@ type AuthFormValues = {
 
 type AuthFormProps = {
   mode: "login" | "signup";
-  onSubmit: (values: AuthFormValues) => void | Promise<void>;
+  onSubmit: (
+    values: AuthFormValues
+  ) => Promise<{ error?: string; message?: string } | void>;
 };
 
 export default function AuthForm({ mode, onSubmit }: AuthFormProps) {

@@ -41,7 +41,7 @@ export default function SignupPage() {
               });
 
               if (error) {
-                throw new Error(error.message);
+                return { error: error.message };
               }
 
               if (data.session) {
@@ -50,7 +50,7 @@ export default function SignupPage() {
                 return;
               }
 
-              setMessage("Account created. Check your email to confirm your account, then log in.");
+              return { message: "Account created. Check your email to confirm your account, then log in." };
             }}
           />
         )}

@@ -35,7 +35,7 @@ export default function LoginPage() {
               });
 
               if (error) {
-                throw new Error(error.message);
+                return { error: error.message};
               }
 
               login(email, password);
