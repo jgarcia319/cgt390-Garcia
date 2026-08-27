@@ -12,9 +12,14 @@ type SearchBarProps = {
 };
 
 type CategoryOption = (typeof listingCategories)[number];
+type SortOption = NonNullable<SearchFilters["sort"]>;
 
 function isCategoryOption(value: string): value is CategoryOption {
   return listingCategories.some((item) => item === value);
+}
+
+function isSortOption(value: string): value is SortOption {
+  return value === "recommended" || value === "price-asc" || value === "price-desc";
 }
 
 export default function SearchBar({ initialValues, compact = false }: SearchBarProps) {
@@ -103,7 +108,15 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
 
       <label className="field">
         <span>Sort</span>
-        <select value={sort} onChange={(event) => setSort(event.target.value)}>
+        <select
+          value={sort}
+          onChange={(event) => {
+            const nextValue = event.target.value;
+            if (isSortOption(nextValue)) {
+              setSort(nextValue);
+            }
+          }}
+        >
           <option value="recommended">Recommended</option>
           <option value="price-asc">Price: Low to High</option>
           <option value="price-desc">Price: High to Low</option>
