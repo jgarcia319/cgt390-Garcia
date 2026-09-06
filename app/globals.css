@@ -124,6 +124,63 @@ body {
   color: var(--muted);
 }
 
+.hero-catalog-link {
+  align-self: center;
+}
+
+.shop-edits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem;
+  margin: 0.4rem 0 2.2rem;
+}
+
+.edit-panel {
+  border: 1px solid #ffffff1f;
+  border-radius: 0.95rem;
+  padding: 1.45rem;
+  background:
+    linear-gradient(145deg, #fb7d3625, #101018 58%),
+    #101018;
+}
+
+.edit-panel-alt {
+  background:
+    linear-gradient(145deg, #d937ff25, #101018 58%),
+    #101018;
+}
+
+.edit-panel h2,
+.collection-strip h2 {
+  margin: 0.4rem 0 0.55rem;
+}
+
+.edit-panel > p:not(.eyebrow),
+.collection-strip p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+
+.edit-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 1.1rem 0;
+}
+
+.collection-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.2rem;
+  border: 1px solid #ffffff22;
+  border-radius: 1rem;
+  padding: 1.4rem;
+  background:
+    linear-gradient(120deg, #d937ff1f, #fb7d3615 55%, #b7ff2b12),
+    #101018;
+}
+
 .eyebrow {
   margin: 0;
   text-transform: uppercase;
@@ -527,5 +584,14 @@ body {
 
   .highlight {
     grid-template-columns: 1fr;
+  }
+
+  .shop-edits {
+    grid-template-columns: 1fr;
+  }
+
+  .collection-strip {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

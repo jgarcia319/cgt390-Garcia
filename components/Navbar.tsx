@@ -6,8 +6,10 @@ import { useAppState } from "@/context/AppStateContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/results", label: "Shop" },
-  { href: "/saved", label: "Wishlist" }
+  { href: "/#shop-him", label: "For Him" },
+  { href: "/#shop-her", label: "For Her" },
+  { href: "/#collabs", label: "Collabs" },
+  { href: "/results", label: "All Products" }
 ];
 
 export default function Navbar() {
@@ -26,7 +28,12 @@ export default function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={pathname === link.href ? "nav-link active" : "nav-link"}
+                className={
+                  (link.href === "/" && pathname === "/") ||
+                  (link.href === "/results" && pathname === "/results")
+                    ? "nav-link active"
+                    : "nav-link"
+                }
               >
                 {link.label}
               </Link>
