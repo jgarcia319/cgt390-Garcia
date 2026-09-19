@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppState } from "@/context/AppStateContext";
@@ -15,6 +16,7 @@ const navLinks = [
 export default function Navbar() {
   const pathname = usePathname();
   const { user, savedIds, logout } = useAppState();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <header className="topbar">
@@ -22,8 +24,18 @@ export default function Navbar() {
         NOVA STREET
       </Link>
 
+      <button
+        type="button"
+        className="nav-toggle"
+        aria-controls="main-navigation-links"
+        aria-expanded={isMenuOpen}
+        onClick={() => setIsMenuOpen((open) => !open)}
+      >
+        {isMenuOpen ? "Close" : "Menu"}
+      </button>
+
       <nav aria-label="Main navigation">
-        <ul className="nav-list">
+        <ul id="main-navigation-links" className={isMenuOpen ? "nav-list is-open" : "nav-list"}>
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -34,6 +46,7 @@ export default function Navbar() {
                     ? "nav-link active"
                     : "nav-link"
                 }
+                onClick={() => setIsMenuOpen(false)}
               >
                 {link.label}
               </Link>
