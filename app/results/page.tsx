@@ -2,7 +2,7 @@ import EmptyState from "@/components/EmptyState";
 import ListingCard from "@/components/ListingCard";
 import SearchBar from "@/components/SearchBar";
 import { filterListings } from "@/lib/listings";
-import type { ListingCategory, SearchFilters } from "@/lib/types";
+import type { ListingAudience, ListingCategory, SearchFilters } from "@/lib/types";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -21,6 +21,7 @@ function readFilters(searchParams: SearchParams | undefined): SearchFilters {
   const query = pickSingle(searchParams?.query);
   const line = pickSingle(searchParams?.line);
   const category = pickSingle(searchParams?.category) as ListingCategory | "All" | undefined;
+  const audience = pickSingle(searchParams?.audience) as ListingAudience | "All" | undefined;
   const maxPriceRaw = pickSingle(searchParams?.maxPrice);
   const sortRaw = pickSingle(searchParams?.sort);
 
@@ -33,6 +34,7 @@ function readFilters(searchParams: SearchParams | undefined): SearchFilters {
     query,
     line,
     category,
+    audience,
     maxPrice: parsedMaxPrice,
     sort
   };

@@ -5,6 +5,7 @@ export const listingCategories: Array<ListingCategory | "All"> = [
   "Tees",
   "Hoodies",
   "Bottoms",
+  "Leggings",
   "Outerwear",
   "Accessories"
 ];
@@ -17,6 +18,7 @@ export const listings: Listing[] = [
     line: "After Hours Drop",
     fit: "Oversized",
     category: "Tees",
+    audience: "Unisex",
     price: 44,
     tags: ["Heavyweight", "Screen Print", "Relaxed"],
     images: ["Front chest print graphic", "Washed charcoal fabric detail"],
@@ -32,6 +34,7 @@ export const listings: Listing[] = [
     line: "Voltage Pack",
     fit: "Boxy",
     category: "Hoodies",
+    audience: "Men",
     price: 78,
     tags: ["Fleece", "Drop Shoulder", "Street Fit"],
     images: ["Minimal chest logo", "Double-layer hood structure"],
@@ -47,6 +50,7 @@ export const listings: Listing[] = [
     line: "Transit Uniform",
     fit: "Tapered",
     category: "Bottoms",
+    audience: "Unisex",
     price: 84,
     tags: ["Utility", "Stretch", "Street Tech"],
     images: ["Cargo pocket profile", "Cuffed hem and ankle zip"],
@@ -62,6 +66,7 @@ export const listings: Listing[] = [
     line: "Velocity Series",
     fit: "Athletic",
     category: "Outerwear",
+    audience: "Unisex",
     price: 92,
     tags: ["Contrast Piping", "Full Zip", "Breathable"],
     images: ["Reflective piping lines", "High-collar zip finish"],
@@ -77,6 +82,7 @@ export const listings: Listing[] = [
     line: "After Hours Drop",
     fit: "Regular",
     category: "Outerwear",
+    audience: "Women",
     price: 88,
     tags: ["Layering", "Multi-pocket", "Water Resistant"],
     images: ["Front utility pockets", "Back reflective detail"],
@@ -92,6 +98,7 @@ export const listings: Listing[] = [
     line: "Voltage Pack",
     fit: "One Size",
     category: "Accessories",
+    audience: "Unisex",
     price: 32,
     tags: ["Structured Crown", "Flat Brim", "Embroidered"],
     images: ["Raised logo embroidery", "Contrast underbill"],
@@ -99,6 +106,22 @@ export const listings: Listing[] = [
       "Classic snapback with a structured crown and bold embroidery to finish every fit cleanly.",
     specs: ["Cotton Twill", "Adjustable Snap", "6 Panel Build", "Moisture Band"],
     isFeatured: false
+  },
+  {
+    id: "nova-007",
+    slug: "motion-sculpt-legging",
+    title: "Motion Sculpt Legging",
+    line: "Velocity Series",
+    fit: "High-rise",
+    category: "Leggings",
+    audience: "Women",
+    price: 64,
+    tags: ["Four-way Stretch", "Sculpting", "Reflective"],
+    images: ["Reflective side seam", "High-rise waistband"],
+    description:
+      "A supportive, flexible legging with a clean sculpted fit for training, travel, and everyday movement.",
+    specs: ["Nylon Blend", "Four-way Stretch", "High-rise Waist", "Moisture Wicking"],
+    isFeatured: true
   }
 ];
 
@@ -120,16 +143,20 @@ function matchesQuery(listing: Listing, query: string) {
 }
 
 export function filterListings(filters: SearchFilters): Listing[] {
-  const { query, line, category, maxPrice, sort = "recommended" } = filters;
+  const { query, line, category, audience, maxPrice, sort = "recommended" } = filters;
 
   const filtered = listings.filter((listing) => {
     const lineMatch = line
       ? listing.line.toLowerCase().includes(line.trim().toLowerCase())
       : true;
     const categoryMatch = category && category !== "All" ? listing.category === category : true;
+    const audienceMatch =
+      audience && audience !== "All"
+        ? listing.audience === audience || listing.audience === "Unisex"
+        : true;
     const priceMatch = typeof maxPrice === "number" ? listing.price <= maxPrice : true;
 
-    return lineMatch && categoryMatch && priceMatch && matchesQuery(listing, query ?? "");
+    return lineMatch && categoryMatch && audienceMatch && priceMatch && matchesQuery(listing, query ?? "");
   });
 
   if (sort === "price-asc") {

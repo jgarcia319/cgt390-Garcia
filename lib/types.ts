@@ -1,4 +1,11 @@
-export type ListingCategory = "Tees" | "Hoodies" | "Bottoms" | "Outerwear" | "Accessories";
+export type ListingCategory =
+  | "Tees"
+  | "Hoodies"
+  | "Bottoms"
+  | "Leggings"
+  | "Outerwear"
+  | "Accessories";
+export type ListingAudience = "Men" | "Women" | "Unisex";
 
 export type Listing = {
   id: string;
@@ -7,6 +14,7 @@ export type Listing = {
   line: string;
   fit: string;
   category: ListingCategory;
+  audience: ListingAudience;
   price: number;
   tags: string[];
   images: string[];
@@ -19,6 +27,7 @@ export type SearchFilters = {
   query?: string;
   line?: string;
   category?: ListingCategory | "All";
+  audience?: ListingAudience | "All";
   maxPrice?: number;
   sort?: "recommended" | "price-asc" | "price-desc";
 };

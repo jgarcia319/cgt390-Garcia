@@ -4,7 +4,7 @@ import { useState } from "react";
 import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { listingCategories } from "@/lib/listings";
-import type { SearchFilters } from "@/lib/types";
+import type { ListingAudience, SearchFilters } from "@/lib/types";
 
 type SearchBarProps = {
   initialValues?: SearchFilters;
@@ -27,6 +27,7 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
   const [query, setQuery] = useState(initialValues?.query ?? "");
   const [line, setLine] = useState(initialValues?.line ?? "");
   const [category, setCategory] = useState(initialValues?.category ?? "All");
+  const [audience, setAudience] = useState(initialValues?.audience ?? "All");
   const [maxPrice, setMaxPrice] = useState(initialValues?.maxPrice?.toString() ?? "");
   const [sort, setSort] = useState(initialValues?.sort ?? "recommended");
 
@@ -43,6 +44,9 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
     if (category !== "All") {
       params.set("category", category);
     }
+    if (audience !== "All") {
+      params.set("audience", audience);
+    }
     if (maxPrice.trim()) {
       params.set("maxPrice", maxPrice.trim());
     }
@@ -56,6 +60,18 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
 
   return (
     <form className={compact ? "search-form compact" : "search-form"} onSubmit={submitSearch}>
+      <label className="field">
+        <span>Shop for</span>
+        <select
+          value={audience}
+          onChange={(event) => setAudience(event.target.value as ListingAudience | "All")}
+        >
+          <option value="All">Everyone</option>
+          <option value="Men">Men</option>
+          <option value="Women">Women</option>
+        </select>
+      </label>
+
       <label className="field">
         <span>Search</span>
         <input

@@ -1,7 +1,43 @@
 import Link from "next/link";
 import ListingCard from "@/components/ListingCard";
+import PromoCarousel from "@/components/PromoCarousel";
 import SearchBar from "@/components/SearchBar";
 import { listings } from "@/lib/listings";
+
+const shopCards = [
+  {
+    label: "Men's hoodies",
+    description: "Boxy fleece layers with room to move.",
+    href: "/results?audience=Men&category=Hoodies",
+    image:
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85",
+    alt: "Person wearing a dark hoodie"
+  },
+  {
+    label: "Women's leggings",
+    description: "Sculpted stretch essentials for every motion.",
+    href: "/results?audience=Women&category=Leggings",
+    image:
+      "https://images.unsplash.com/photo-1506629905607-d9c297d3d3e1?auto=format&fit=crop&w=800&q=85",
+    alt: "Person wearing black activewear leggings"
+  },
+  {
+    label: "New arrivals",
+    description: "Fresh pieces from the latest NOVA drop.",
+    href: "/results?sort=recommended",
+    image:
+      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=800&q=85",
+    alt: "Clothing rack with modern streetwear"
+  },
+  {
+    label: "Accessories",
+    description: "The finishing details that pull it together.",
+    href: "/results?category=Accessories",
+    image:
+      "https://images.unsplash.com/photo-1521369909029-2afed882baee?auto=format&fit=crop&w=800&q=85",
+    alt: "Black cap displayed against a neutral background"
+  }
+];
 
 export default function Home() {
   const featured = listings.filter((listing) => listing.isFeatured).slice(0, 3);
@@ -26,6 +62,33 @@ export default function Home() {
           <Link href="/results" className="text-link hero-catalog-link">
             View all products
           </Link>
+        </div>
+      </section>
+
+      <PromoCarousel />
+
+      <section className="section-block shop-categories" aria-labelledby="shop-categories-heading">
+        <div className="section-heading">
+          <div>
+            <p className="eyebrow">Find your lane</p>
+            <h2 id="shop-categories-heading">Shop by category</h2>
+          </div>
+          <Link href="/results" className="text-link">
+            View all
+          </Link>
+        </div>
+        <div className="category-grid">
+          {shopCards.map((card) => (
+            <Link key={card.label} href={card.href} className="category-card">
+              <img src={card.image} alt={card.alt} />
+              <span className="category-card-overlay" />
+              <span className="category-card-content">
+                <strong>{card.label}</strong>
+                <small>{card.description}</small>
+                <span className="category-card-link">Shop now →</span>
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
