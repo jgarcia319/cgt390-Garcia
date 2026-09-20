@@ -120,6 +120,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  flex-wrap: nowrap;
   gap: 0.5rem;
 }
 
@@ -386,6 +387,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  white-space: nowrap;
   border-radius: 999px;
   border: 1px solid #ffffff2d;
   background: #ffffff07;
