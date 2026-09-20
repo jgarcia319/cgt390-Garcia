@@ -17,7 +17,10 @@ export type Listing = {
   audience: ListingAudience;
   price: number;
   tags: string[];
-  images: string[];
+  images: Array<{
+    src: string;
+    alt: string;
+  }>;
   description: string;
   specs: string[];
   isFeatured: boolean;

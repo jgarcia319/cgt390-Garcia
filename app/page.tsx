@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import ListingCard from "@/components/ListingCard";
 import PromoCarousel from "@/components/PromoCarousel";
 import SearchBar from "@/components/SearchBar";
@@ -53,10 +54,10 @@ export default function Home() {
           catalog.
         </p>
         <div className="hero-actions">
-          <Link href="#shop-him" className="button primary">
+          <Link href="/men" className="button primary">
             Shop for him
           </Link>
-          <Link href="#shop-her" className="button ghost">
+          <Link href="/women" className="button ghost">
             Shop for her
           </Link>
           <Link href="/results" className="text-link hero-catalog-link">
@@ -80,7 +81,12 @@ export default function Home() {
         <div className="category-grid">
           {shopCards.map((card) => (
             <Link key={card.label} href={card.href} className="category-card">
-              <img src={card.image} alt={card.alt} />
+              <Image
+                src={card.image}
+                alt={card.alt}
+                fill
+                sizes="(max-width: 760px) 45vw, 25vw"
+              />
               <span className="category-card-overlay" />
               <span className="category-card-content">
                 <strong>{card.label}</strong>
@@ -93,34 +99,34 @@ export default function Home() {
       </section>
 
       <section className="shop-edits" aria-label="Shop by edit">
-        <article className="edit-panel" id="shop-him">
+        <article className="edit-panel">
           <p className="eyebrow">For him</p>
           <h2>Core layers. Loud details.</h2>
           <p>Start with category, then move through fresh drops, best sellers, and sale.</p>
           <div className="edit-links">
             {categoryLinks.map((category) => (
-              <Link key={category} href={`/results?category=${category}`} className="tag">
+              <Link key={category} href={`/results?audience=Men&category=${category}`} className="tag">
                 {category}
               </Link>
             ))}
           </div>
-          <Link href="/results" className="text-link">
+          <Link href="/men" className="text-link">
             Shop the him edit
           </Link>
         </article>
 
-        <article className="edit-panel edit-panel-alt" id="shop-her">
+        <article className="edit-panel edit-panel-alt">
           <p className="eyebrow">For her</p>
           <h2>Built to make the fit yours.</h2>
           <p>Browse the newest pieces by category, then save the ones you want to revisit.</p>
           <div className="edit-links">
             {categoryLinks.map((category) => (
-              <Link key={category} href={`/results?category=${category}`} className="tag">
+              <Link key={category} href={`/results?audience=Women&category=${category}`} className="tag">
                 {category}
               </Link>
             ))}
           </div>
-          <Link href="/results" className="text-link">
+          <Link href="/women" className="text-link">
             Shop the her edit
           </Link>
         </article>

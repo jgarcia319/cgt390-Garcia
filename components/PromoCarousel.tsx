@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const slides = [
@@ -63,7 +64,14 @@ export default function PromoCarousel() {
         }
       }}
     >
-      <img className="promo-image" src={slide.image} alt={slide.alt} />
+      <Image
+        className="promo-image"
+        src={slide.image}
+        alt={slide.alt}
+        fill
+        priority={activeIndex === 0}
+        sizes="(max-width: 760px) 92vw, 1140px"
+      />
       <div className="promo-overlay" />
       <div className="promo-content">
         <p className="eyebrow">{slide.eyebrow}</p>

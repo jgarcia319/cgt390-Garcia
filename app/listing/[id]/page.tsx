@@ -1,4 +1,6 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
+import type { Metadata } from "next";
 import SaveButton from "@/components/SaveButton";
 import { getListingById } from "@/lib/listings";
 
@@ -8,6 +10,17 @@ type ListingDetailPageProps = {
   }>;
 };
 
+export async function generateMetadata({ params }: ListingDetailPageProps): Promise<Metadata> {
+  const listing = getListingById((await params).id);
+  return listing
+    ? {
+        title: listing.title,
+        description: listing.description,
+        alternates: { canonical: `/listing/${listing.id}` }
+      }
+    : {};
+}
+
 export default async function ListingDetailPage({ params }: ListingDetailPageProps) {
   const resolvedParams = await params;
   const listing = getListingById(resolvedParams.id);
@@ -16,8 +29,29 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
     notFound();
   }
 
+  const productSchema = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: listing.title,
+    description: listing.description,
+    category: listing.category,
+    image: listing.images.map((image) => image.src),
+    brand: { "@type": "Brand", name: "NOVA STREET" },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: listing.price.toFixed(2),
+      availability: "https://schema.org/InStock",
+      url: `/listing/${listing.id}`
+    }
+  };
+
   return (
     <main>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
       <section className="section-block">
         <p className="eyebrow">
           {listing.line} · {listing.fit} fit
@@ -32,9 +66,9 @@ export default async function ListingDetailPage({ params }: ListingDetailPagePro
       </section>
 
       <section className="detail-gallery">
-        {listing.images.map((description) => (
-          <div key={description} className="detail-image" aria-hidden="true">
-            <span>{description}</span>
+        {listing.images.map((image) => (
+          <div key={image.src} className="detail-image">
+            <Image src={image.src} alt={image.alt} fill sizes="(max-width: 760px) 92vw, 50vw" />
           </div>
         ))}
       </section>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { Listing } from "@/lib/types";
 import SaveButton from "./SaveButton";
 
@@ -9,8 +10,13 @@ type ListingCardProps = {
 export default function ListingCard({ listing }: ListingCardProps) {
   return (
     <article className="listing-card">
-      <div className="listing-image" aria-hidden="true">
-        <span>{listing.images[0]}</span>
+      <div className="listing-image">
+        <Image
+          src={listing.images[0].src}
+          alt={listing.images[0].alt}
+          fill
+          sizes="(max-width: 760px) 92vw, (max-width: 1100px) 45vw, 232px"
+        />
       </div>
       <div className="listing-content">
         <div className="listing-topline">

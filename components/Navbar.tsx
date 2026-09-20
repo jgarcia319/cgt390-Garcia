@@ -7,8 +7,9 @@ import { useAppState } from "@/context/AppStateContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/#shop-him", label: "For Him" },
-  { href: "/#shop-her", label: "For Her" },
+  { href: "/men", label: "For Him" },
+  { href: "/women", label: "For Her" },
+  { href: "/results?sort=recommended", label: "New Arrivals" },
   { href: "/#collabs", label: "Collabs" },
   { href: "/results", label: "All Products" }
 ];
@@ -20,8 +21,9 @@ export default function Navbar() {
 
   return (
     <header className="topbar">
-      <Link href="/" className="brand-link">
-        NOVA STREET
+      <Link href="/" className="brand-link" aria-label="NOVA STREET home">
+        <strong>NOVA STREET</strong>
+        <span>Built for motion. Made to stand out.</span>
       </Link>
 
       <button
@@ -42,7 +44,9 @@ export default function Navbar() {
                 href={link.href}
                 className={
                   (link.href === "/" && pathname === "/") ||
-                  (link.href === "/results" && pathname === "/results")
+                  (link.href === "/results" && pathname === "/results") ||
+                  (link.href === "/men" && pathname === "/men") ||
+                  (link.href === "/women" && pathname === "/women")
                     ? "nav-link active"
                     : "nav-link"
                 }
