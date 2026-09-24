@@ -3,6 +3,7 @@ import Image from "next/image";
 import ListingCard from "@/components/ListingCard";
 import PromoCarousel from "@/components/PromoCarousel";
 import SearchBar from "@/components/SearchBar";
+import TrackedLink from "@/components/TrackedLink";
 import { listings } from "@/lib/listings";
 
 const shopCards = [
@@ -80,7 +81,15 @@ export default function Home() {
         </div>
         <div className="category-grid">
           {shopCards.map((card) => (
-            <Link key={card.label} href={card.href} className="category-card">
+            <TrackedLink
+              key={card.label}
+              href={card.href}
+              className="category-card"
+              eventName={card.label === "Men's hoodies" ? "navigation_click" : undefined}
+              parameters={
+                card.label === "Men's hoodies" ? { link_name: "Men's Hoodies Card" } : undefined
+              }
+            >
               <Image
                 src={card.image}
                 alt={card.alt}
@@ -93,7 +102,7 @@ export default function Home() {
                 <small>{card.description}</small>
                 <span className="category-card-link">Shop now →</span>
               </span>
-            </Link>
+            </TrackedLink>
           ))}
         </div>
       </section>
