@@ -56,7 +56,7 @@ export default function Navbar() {
                     trackEvent("clicks_for_him", { link_name: "For Him" });
                   }
                   if (link.label === "All Products") {
-                    trackEvent("navigation_click", { link_name: "All Products" });
+                    trackEvent("all_products_click", { link_name: "All Products" });
                   }
                   setIsMenuOpen(false);
                 }}
