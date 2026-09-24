@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppState } from "@/context/AppStateContext";
+import { trackEvent } from "@/lib/analytics";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -50,7 +51,12 @@ export default function Navbar() {
                     ? "nav-link active"
                     : "nav-link"
                 }
-                onClick={() => setIsMenuOpen(false)}
+                onClick={() => {
+                  if (link.label === "For Him") {
+                    trackEvent("clicks_for_him", { link_name: "For Him" });
+                  }
+                  setIsMenuOpen(false);
+                }}
               >
                 {link.label}
               </Link>
