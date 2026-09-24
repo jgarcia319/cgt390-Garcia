@@ -33,10 +33,12 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();
+    const searchTerm = query.trim();
+
     const params = new URLSearchParams();
 
-    if (query.trim()) {
-      params.set("query", query.trim());
+    if (searchTerm) {
+      params.set("query", searchTerm);
     }
     if (line.trim()) {
       params.set("line", line.trim());
