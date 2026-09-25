@@ -47,26 +47,6 @@ export default function Home() {
 
   return (
     <main>
-      <section className="hero">
-        <p className="eyebrow">New drop · After hours</p>
-        <h1>Street uniforms made for loud days and late nights.</h1>
-        <p>
-          Explore the latest release, shop by your edit, or browse every NOVA STREET piece in one
-          catalog.
-        </p>
-        <div className="hero-actions">
-          <Link href="/men" className="button primary">
-            Shop for him
-          </Link>
-          <Link href="/women" className="button ghost">
-            Shop for her
-          </Link>
-          <Link href="/results" className="text-link hero-catalog-link">
-            View all products
-          </Link>
-        </div>
-      </section>
-
       <PromoCarousel />
 
       <section className="section-block shop-categories" aria-labelledby="shop-categories-heading">

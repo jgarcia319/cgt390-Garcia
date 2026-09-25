@@ -7,27 +7,27 @@ import { useEffect, useState } from "react";
 const slides = [
   {
     eyebrow: "New drop",
-    title: "After hours, turned all the way up.",
-    body: "Heavyweight layers and graphic essentials for the latest NOVA STREET release.",
-    href: "/results?line=After%20Hours%20Drop",
+    title: "Street uniforms made for loud days and late nights.",
+    body: "Explore heavyweight layers and graphic essentials from the latest NOVA STREET release.",
+    href: "/men",
     image:
       "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=85",
     alt: "Model wearing a layered streetwear outfit"
   },
   {
-    eyebrow: "Newest collab",
-    title: "Voltage Pack: light up the lineup.",
-    body: "Small-run graphics, high-energy color, and crossover pieces made to stand out.",
-    href: "/results?line=Voltage%20Pack",
+    eyebrow: "Find your lane",
+    title: "Built to make the fit yours.",
+    body: "Shop by your edit, from everyday layers to fresh drops made for movement.",
+    href: "/women",
     image:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85",
     alt: "Model posing in a bright fashion look"
   },
   {
-    eyebrow: "Restock alert",
-    title: "The pieces you saved are back.",
-    body: "Refresh your rotation with everyday staples built for repeat wear.",
-    href: "/results?category=Hoodies",
+    eyebrow: "Shop the collection",
+    title: "Every NOVA STREET piece in one catalog.",
+    body: "Browse new drops, everyday staples, and limited collabs in one place.",
+    href: "/results",
     image:
       "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1400&q=85",
     alt: "Folded neutral clothing arranged together"
@@ -78,7 +78,7 @@ export default function PromoCarousel() {
         <h2>{slide.title}</h2>
         <p>{slide.body}</p>
         <Link href={slide.href} className="button primary">
-          Shop the story
+          {activeIndex === 0 ? "Shop for him" : activeIndex === 1 ? "Shop for her" : "View all products"}
         </Link>
       </div>
       <div className="promo-controls">
