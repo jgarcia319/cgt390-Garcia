@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 const slides = [
   {
     eyebrow: "New drop",
-    title: "Street uniforms made for loud days and late nights.",
-    body: "Explore heavyweight layers and graphic essentials from the latest NOVA STREET release.",
+    title: "Made for loud days and late nights.",
+    body: "Heavyweight layers and graphic essentials for the latest drop.",
     href: "/men",
     image:
       "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=1400&q=85",
@@ -16,8 +16,8 @@ const slides = [
   },
   {
     eyebrow: "Find your lane",
-    title: "Built to make the fit yours.",
-    body: "Shop by your edit, from everyday layers to fresh drops made for movement.",
+    title: "Make the fit yours.",
+    body: "Find everyday layers and fresh drops made for movement.",
     href: "/women",
     image:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1400&q=85",
@@ -25,8 +25,8 @@ const slides = [
   },
   {
     eyebrow: "Shop the collection",
-    title: "Every NOVA STREET piece in one catalog.",
-    body: "Browse new drops, everyday staples, and limited collabs in one place.",
+    title: "Your next fit starts here.",
+    body: "Browse new drops, staples, and limited collabs in one place.",
     href: "/results",
     image:
       "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=1400&q=85",
@@ -78,7 +78,11 @@ export default function PromoCarousel() {
         <h2>{slide.title}</h2>
         <p>{slide.body}</p>
         <Link href={slide.href} className="button primary">
-          {activeIndex === 0 ? "Shop for him" : activeIndex === 1 ? "Shop for her" : "View all products"}
+          {activeIndex === 0
+            ? "Shop for him"
+            : activeIndex === 1
+              ? "Shop for her"
+              : "View all products"}
         </Link>
       </div>
       <div className="promo-controls">
