@@ -20,7 +20,7 @@ const shopCards = [
     description: "Sculpted stretch essentials for every motion.",
     href: "/results?audience=Women&category=Leggings",
     image:
-      "https://images.unsplash.com/photo-1506629905607-d9c297d3d3e1?auto=format&fit=crop&w=800&q=85",
+      "https://images.unsplash.com/photo-1538805060514-97d9cc17730c?auto=format&fit=crop&w=800&q=85",
     alt: "Person wearing black activewear leggings"
   },
   {
