@@ -1,6 +1,5 @@
 "use client";
 
-import { useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AuthForm from "@/components/AuthForm";
@@ -10,7 +9,6 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 export default function LoginPage() {
   const router = useRouter();
   const { login, user } = useAppState();
-  const supabase = useMemo(() => createSupabaseBrowserClient(), []);
 
   return (
     <main>
@@ -29,6 +27,7 @@ export default function LoginPage() {
           <AuthForm
             mode="login"
             onSubmit={async ({ email, password }) => {
+              const supabase = createSupabaseBrowserClient();
               const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password
