@@ -26,7 +26,9 @@ export default function ListingCard({ listing }: ListingCardProps) {
           <SaveButton listingId={listing.id} />
         </div>
         <h3>
-          <Link href={`/listing/${listing.id}`}>{listing.title}</Link>
+          <Link className="listing-link" href={`/listing/${listing.id}`}>
+            {listing.title}
+          </Link>
         </h3>
         <p className="listing-meta">
           {listing.category} · ${listing.price}

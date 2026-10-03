@@ -9,6 +9,7 @@ import type { ListingAudience, SearchFilters } from "@/lib/types";
 type SearchBarProps = {
   initialValues?: SearchFilters;
   compact?: boolean;
+  onSubmitComplete?: () => void;
 };
 
 type CategoryOption = (typeof listingCategories)[number];
@@ -22,7 +23,11 @@ function isSortOption(value: string): value is SortOption {
   return value === "recommended" || value === "price-asc" || value === "price-desc";
 }
 
-export default function SearchBar({ initialValues, compact = false }: SearchBarProps) {
+export default function SearchBar({
+  initialValues,
+  compact = false,
+  onSubmitComplete
+}: SearchBarProps) {
   const router = useRouter();
   const [query, setQuery] = useState(initialValues?.query ?? "");
   const [line, setLine] = useState(initialValues?.line ?? "");
@@ -58,6 +63,7 @@ export default function SearchBar({ initialValues, compact = false }: SearchBarP
 
     const search = params.toString();
     router.push(search ? `/results?${search}` : "/results");
+    onSubmitComplete?.();
   };
 
   return (

@@ -10,7 +10,7 @@ const shopCards = [
   {
     label: "Men's hoodies",
     description: "Boxy fleece layers with room to move.",
-    href: "/results?audience=Men&category=Hoodies",
+    href: "/men/hoodies",
     image:
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=85",
     alt: "Person wearing a dark hoodie"

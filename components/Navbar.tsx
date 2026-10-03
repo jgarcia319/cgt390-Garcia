@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppState } from "@/context/AppStateContext";
 import { trackEvent } from "@/lib/analytics";
+import SearchOverlay from "./SearchOverlay";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -19,6 +20,13 @@ export default function Navbar() {
   const pathname = usePathname();
   const { user, savedIds, logout } = useAppState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const searchButtonRef = useRef<HTMLButtonElement>(null);
+
+  const closeSearch = () => {
+    setIsSearchOpen(false);
+    requestAnimationFrame(() => searchButtonRef.current?.focus());
+  };
 
   return (
     <header className="topbar">
@@ -69,6 +77,18 @@ export default function Navbar() {
       </nav>
 
       <div className="topbar-actions">
+        <button
+          ref={searchButtonRef}
+          type="button"
+          className="search-trigger"
+          aria-label="Open product search"
+          aria-controls="search-dialog"
+          aria-expanded={isSearchOpen}
+          onClick={() => setIsSearchOpen(true)}
+        >
+          <span aria-hidden="true">⌕</span>
+          <span className="sr-only">Search</span>
+        </button>
         <Link href="/saved" className="nav-link saved-pill">
           Wishlist ({savedIds.length})
         </Link>
@@ -90,6 +110,7 @@ export default function Navbar() {
           </>
         )}
       </div>
+      {isSearchOpen ? <SearchOverlay onClose={closeSearch} /> : null}
     </header>
   );
 }

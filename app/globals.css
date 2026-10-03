@@ -124,6 +124,38 @@ body {
   gap: 0.5rem;
 }
 
+.search-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.45rem;
+  height: 2.45rem;
+  border: 1px solid #ffffff2d;
+  border-radius: 50%;
+  color: #fff;
+  background: #ffffff08;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.search-trigger:hover {
+  background: #ffffff16;
+  border-color: #ffffff55;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .saved-pill,
 .user-pill {
   font-size: 0.9rem;
@@ -517,6 +549,12 @@ body {
   text-decoration: underline;
 }
 
+.listing-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+  border-radius: 0.2rem;
+}
+
 .listing-topline {
   display: flex;
   align-items: center;
@@ -608,6 +646,55 @@ body {
 
 .field input::placeholder {
   color: #989ab1;
+}
+
+.search-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: start center;
+  padding: 7.5rem 1.2rem 2rem;
+  overflow-y: auto;
+  background: #000000b8;
+}
+
+.search-dialog {
+  width: min(900px, 100%);
+  border: 1px solid #ffffff35;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  background: #101017;
+  box-shadow: 0 1.5rem 4rem #00000088;
+}
+
+.search-dialog-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.search-dialog-heading h2 {
+  margin: 0.35rem 0;
+}
+
+.search-dialog-heading p:not(.eyebrow) {
+  margin: 0;
+  color: var(--muted);
+}
+
+.search-dialog-close {
+  flex: 0 0 auto;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1px solid #ffffff2d;
+  border-radius: 50%;
+  color: #fff;
+  background: #ffffff08;
+  font: inherit;
+  font-size: 1.4rem;
+  cursor: pointer;
 }
 
 .highlight {
@@ -802,7 +889,9 @@ body {
 .button:focus-visible,
 .save-button:focus-visible,
 .text-link:focus-visible,
-.nav-link:focus-visible {
+.nav-link:focus-visible,
+.search-trigger:focus-visible,
+.search-dialog-close:focus-visible {
   outline: 2px solid #fff;
   outline-offset: 2px;
 }
