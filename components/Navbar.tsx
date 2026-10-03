@@ -45,7 +45,10 @@ export default function Navbar() {
           aria-expanded={isSearchOpen}
           onClick={() => setIsSearchOpen(true)}
         >
-          <span className="search-icon" aria-hidden="true" />
+          <svg className="search-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.8" cy="10.8" r="6.8" />
+            <path d="m16 16 5 5" />
+          </svg>
           <span className="sr-only">Search</span>
         </button>
         <button
