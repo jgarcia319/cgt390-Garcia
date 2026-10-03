@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 import type { MouseEvent } from "react";
 import SearchBar from "./SearchBar";
 
@@ -11,6 +12,11 @@ type SearchOverlayProps = {
 export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    setPortalTarget(document.body);
+  }, []);
 
   useEffect(() => {
     closeButtonRef.current?.focus();
@@ -55,12 +61,17 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   }, []);
 
   const handleBackdropClick = (event: MouseEvent<HTMLDivElement>) => {
-    if (event.target === dialogRef.current) {
+    if (event.target === event.currentTarget) {
       onClose();
     }
   };
 
-  return (
+  if (!portalTarget) {
+    return null;
+  }
+
+  return createPortal(
+    <>
     <div className="search-overlay" onMouseDown={handleBackdropClick}>
       <section
         id="search-dialog"
@@ -89,5 +100,7 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
         <SearchBar onSubmitComplete={onClose} />
       </section>
     </div>
+    </>,
+    portalTarget
   );
 }
