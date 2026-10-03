@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAppState } from "@/context/AppStateContext";
@@ -22,6 +22,10 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const searchButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    setIsSearchOpen(false);
+  }, [pathname]);
 
   const closeSearch = () => {
     setIsSearchOpen(false);

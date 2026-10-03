@@ -669,25 +669,29 @@ body {
   position: fixed;
   inset: 0;
   z-index: 100;
-  display: block;
+  display: grid;
+  place-items: start center;
+  padding: clamp(6.5rem, 13vh, 9rem) 1.2rem 2rem;
   overflow-y: auto;
-  background: #000000d9;
+  background: #000000b8;
 }
 
 .search-dialog {
-  width: 100%;
-  min-height: 100dvh;
-  padding: clamp(7rem, 15vh, 10rem) max(5vw, calc((100vw - 1140px) / 2)) 4rem;
+  width: min(1140px, 100%);
+  max-height: calc(100vh - 9rem);
+  overflow-y: auto;
+  border: 1px solid #ffffff35;
+  border-radius: 1.25rem;
+  padding: clamp(1.5rem, 4vw, 3rem);
   background:
     radial-gradient(circle at 12% 8%, #fb7d362b 0%, transparent 34%),
     radial-gradient(circle at 88% 14%, #d937ff26 0%, transparent 35%),
-    #101017f7;
+    #101017;
   box-shadow: 0 0 5rem #000000cc;
 }
 
 .search-dialog-heading {
-  width: min(100%, 900px);
-  margin: 0 auto 2rem;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
@@ -720,8 +724,6 @@ body {
 }
 
 .search-dialog > .search-form {
-  width: min(100%, 1140px);
-  margin: 0 auto;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1rem;
   padding: clamp(1.25rem, 3vw, 2rem);
