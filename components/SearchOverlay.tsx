@@ -18,6 +18,10 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   }, []);
 
   useEffect(() => {
+    if (!portalTarget) {
+      return;
+    }
+
     dialogRef.current?.querySelector<HTMLElement>("select")?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -49,7 +53,7 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
 
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, portalTarget]);
 
   useEffect(() => {
     const previousOverflow = document.body.style.overflow;
