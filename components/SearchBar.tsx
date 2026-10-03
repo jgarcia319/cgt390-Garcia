@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { listingCategories } from "@/lib/listings";
@@ -35,6 +35,15 @@ export default function SearchBar({
   const [audience, setAudience] = useState(initialValues?.audience ?? "All");
   const [maxPrice, setMaxPrice] = useState(initialValues?.maxPrice?.toString() ?? "");
   const [sort, setSort] = useState(initialValues?.sort ?? "recommended");
+
+  useEffect(() => {
+    setQuery(initialValues?.query ?? "");
+    setLine(initialValues?.line ?? "");
+    setCategory(initialValues?.category ?? "All");
+    setAudience(initialValues?.audience ?? "All");
+    setMaxPrice(initialValues?.maxPrice?.toString() ?? "");
+    setSort(initialValues?.sort ?? "recommended");
+  }, [initialValues]);
 
   const submitSearch = (event: FormEvent) => {
     event.preventDefault();

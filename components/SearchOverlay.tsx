@@ -11,7 +11,6 @@ type SearchOverlayProps = {
 
 export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
   const [portalTarget, setPortalTarget] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -19,7 +18,7 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
   }, []);
 
   useEffect(() => {
-    closeButtonRef.current?.focus();
+    dialogRef.current?.querySelector<HTMLElement>("select")?.focus();
 
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
@@ -88,7 +87,6 @@ export default function SearchOverlay({ onClose }: SearchOverlayProps) {
             <p>Search by product, drop, audience, or category, then refine by price and sort order.</p>
           </div>
           <button
-            ref={closeButtonRef}
             type="button"
             className="search-dialog-close"
             aria-label="Close search"
