@@ -35,15 +35,29 @@ export default function Navbar() {
         <span>Built for motion. Made to stand out.</span>
       </Link>
 
-      <button
-        type="button"
-        className="nav-toggle"
-        aria-controls="main-navigation-links"
-        aria-expanded={isMenuOpen}
-        onClick={() => setIsMenuOpen((open) => !open)}
-      >
-        {isMenuOpen ? "Close" : "Menu"}
-      </button>
+      <div className="header-tools">
+        <button
+          ref={searchButtonRef}
+          type="button"
+          className="search-trigger"
+          aria-label="Open product search"
+          aria-controls="search-dialog"
+          aria-expanded={isSearchOpen}
+          onClick={() => setIsSearchOpen(true)}
+        >
+          <span className="search-icon" aria-hidden="true" />
+          <span className="sr-only">Search</span>
+        </button>
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-controls="main-navigation-links"
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((open) => !open)}
+        >
+          {isMenuOpen ? "Close" : "Menu"}
+        </button>
+      </div>
 
       <nav aria-label="Main navigation">
         <ul id="main-navigation-links" className={isMenuOpen ? "nav-list is-open" : "nav-list"}>
@@ -77,18 +91,6 @@ export default function Navbar() {
       </nav>
 
       <div className="topbar-actions">
-        <button
-          ref={searchButtonRef}
-          type="button"
-          className="search-trigger"
-          aria-label="Open product search"
-          aria-controls="search-dialog"
-          aria-expanded={isSearchOpen}
-          onClick={() => setIsSearchOpen(true)}
-        >
-          <span aria-hidden="true">⌕</span>
-          <span className="sr-only">Search</span>
-        </button>
         <Link href="/saved" className="nav-link saved-pill">
           Wishlist ({savedIds.length})
         </Link>
