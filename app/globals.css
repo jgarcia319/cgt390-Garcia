@@ -661,6 +661,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  min-width: 0;
 }
 
 .field span {
@@ -670,6 +671,7 @@ body {
 
 .field input,
 .field select {
+  min-width: 0;
   border-radius: 0.7rem;
   border: 1px solid #ffffff24;
   background: #0f0f17;
@@ -1072,6 +1074,67 @@ body {
 @media (max-width: 760px) {
   .topbar.menu-open .topbar-actions {
     margin-left: 0;
+  }
+
+  .search-overlay {
+    padding: 5.7rem 0.65rem 1rem;
+  }
+
+  .search-dialog {
+    width: 100%;
+    max-height: calc(100vh - 6.7rem);
+    padding: 1.15rem;
+    border-radius: 1rem;
+  }
+
+  .search-dialog-heading {
+    align-items: flex-start;
+    margin-bottom: 1.25rem;
+    gap: 0.8rem;
+  }
+
+  .search-dialog-heading > div {
+    min-width: 0;
+  }
+
+  .search-dialog-heading h2 {
+    margin: 0.35rem 0 0.55rem;
+    font-size: clamp(1.8rem, 9vw, 2.4rem);
+    line-height: 1.05;
+  }
+
+  .search-dialog-heading p:not(.eyebrow) {
+    max-width: 32ch;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  .search-dialog-close {
+    width: 2.7rem;
+    height: 2.7rem;
+  }
+
+  .search-dialog > .search-form {
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .search-dialog > .search-form .field span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #eef0ff;
+  }
+
+  .search-dialog > .search-form .field input,
+  .search-dialog > .search-form .field select {
+    min-height: 2.85rem;
+    font-size: 1rem;
+  }
+
+  .search-dialog > .search-form .button {
+    width: 100%;
+    min-height: 3rem;
+    margin-top: 0.15rem;
   }
 }
 
