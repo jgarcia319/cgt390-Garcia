@@ -2,7 +2,6 @@ import Link from "next/link";
 import Image from "next/image";
 import ListingCard from "@/components/ListingCard";
 import PromoCarousel from "@/components/PromoCarousel";
-import SearchBar from "@/components/SearchBar";
 import TrackedLink from "@/components/TrackedLink";
 import { listings } from "@/lib/listings";
 
@@ -144,13 +143,6 @@ export default function Home() {
             <ListingCard key={listing.id} listing={listing} />
           ))}
         </div>
-      </section>
-
-      <section className="section-block" aria-labelledby="find-fit-heading">
-        <div className="section-heading">
-          <h2 id="find-fit-heading">Find your next fit</h2>
-        </div>
-        <SearchBar />
       </section>
 
       <section className="section-block highlight">

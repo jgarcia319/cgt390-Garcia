@@ -33,6 +33,8 @@ body {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 .site-shell {
@@ -250,13 +252,15 @@ body {
   margin: 0.45rem 0 0.65rem;
   max-width: 440px;
   font-size: clamp(1.8rem, 4vw, 2.85rem);
-  line-height: 1.04;
+  line-height: 1.08;
+  text-wrap: balance;
 }
 
 .promo-content > p:not(.eyebrow) {
-  max-width: 380px;
+  max-width: 42ch;
   margin: 0 0 1.3rem;
   color: #e2e3f1;
+  line-height: 1.6;
 }
 
 .promo-controls {
@@ -400,12 +404,16 @@ body {
 .edit-panel h2,
 .collection-strip h2 {
   margin: 0.4rem 0 0.55rem;
+  line-height: 1.12;
+  text-wrap: balance;
 }
 
 .edit-panel > p:not(.eyebrow),
 .collection-strip p:not(.eyebrow) {
+  max-width: 46ch;
   margin: 0;
   color: var(--muted);
+  line-height: 1.65;
 }
 
 .edit-links {
@@ -497,6 +505,8 @@ body {
 
 .section-heading h2 {
   margin: 0;
+  line-height: 1.15;
+  text-wrap: balance;
 }
 
 .page-title {
@@ -602,6 +612,13 @@ body {
   padding: 0.35rem 0.72rem;
   font-size: 0.78rem;
   cursor: pointer;
+}
+
+.detail-heading .save-button {
+  min-height: 2.75rem;
+  padding: 0.62rem 1.15rem;
+  font-size: 0.95rem;
+  font-weight: 700;
 }
 
 .save-button.active {
@@ -954,7 +971,7 @@ body {
 
   .topbar {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 0.7rem;
     min-height: 4.5rem;
     padding: 0.7rem 4vw;
@@ -973,8 +990,7 @@ body {
   }
 
   .topbar nav {
-    width: 100%;
-    order: 4;
+    order: 3;
   }
 
   .nav-list {
@@ -993,11 +1009,21 @@ body {
   }
 
   .topbar-actions {
-    order: 3;
-    margin-left: auto;
+    display: none;
   }
 
-  .topbar-actions {
+  .topbar.menu-open {
+    flex-wrap: wrap;
+  }
+
+  .topbar.menu-open nav {
+    width: 100%;
+    order: 4;
+  }
+
+  .topbar.menu-open .topbar-actions {
+    display: flex;
+    order: 5;
     width: 100%;
     justify-content: flex-start;
     flex-wrap: wrap;
@@ -1044,8 +1070,7 @@ body {
 }
 
 @media (max-width: 760px) {
-  .topbar-actions {
-    width: 100%;
+  .topbar.menu-open .topbar-actions {
     margin-left: 0;
   }
 }

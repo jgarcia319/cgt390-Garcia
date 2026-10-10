@@ -33,7 +33,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="topbar">
+    <header className={isMenuOpen ? "topbar menu-open" : "topbar"}>
       <Link href="/" className="brand-link" aria-label="NOVA STREET home">
         <strong>NOVA STREET</strong>
         <span>Built for motion. Made to stand out.</span>
