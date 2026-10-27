@@ -8,7 +8,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function SignupPage() {
   const router = useRouter();
-  const { signup, user } = useAppState();
+  const { user, authLoading } = useAppState();
 
   return (
     <main>
@@ -16,7 +16,9 @@ export default function SignupPage() {
         <p className="eyebrow">Account</p>
         <h1 className="page-title">Sign up</h1>
         <p>Create a free account to save your favorite fictional products.</p>
-        {user ? (
+        {authLoading ? (
+          <p>Loading account...</p>
+        ) : user ? (
           <div className="notice">
             <p>You are already signed in as {user.email}.</p>
             <button type="button" className="button primary" onClick={() => router.push("/saved")}>
@@ -43,7 +45,6 @@ export default function SignupPage() {
               }
 
               if (data.session) {
-                signup(name ?? "", email, password);
                 router.push("/saved");
                 return;
               }

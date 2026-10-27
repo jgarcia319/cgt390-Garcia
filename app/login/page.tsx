@@ -8,7 +8,7 @@ import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 export default function LoginPage() {
   const router = useRouter();
-  const { login, user } = useAppState();
+  const { user, authLoading } = useAppState();
 
   return (
     <main>
@@ -16,7 +16,9 @@ export default function LoginPage() {
         <p className="eyebrow">Account</p>
         <h1 className="page-title">Log in</h1>
         <p>Access your wishlist and pick up where you left off.</p>
-        {user ? (
+        {authLoading ? (
+          <p>Loading account...</p>
+        ) : user ? (
           <div className="notice">
             <p>You are currently logged in as {user.email}.</p>
             <button type="button" className="button primary" onClick={() => router.push("/saved")}>
@@ -37,7 +39,6 @@ export default function LoginPage() {
                 return { error: error.message};
               }
 
-              login(email, password);
               router.push("/saved");
             }}
           />

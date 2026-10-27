@@ -9,8 +9,11 @@ import {
   useState,
   type ReactNode
 } from "react";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 
 type User = {
+  id: string;
   name: string;
   email: string;
 };
@@ -18,14 +21,12 @@ type User = {
 type AppStateValue = {
   user: User | null;
   savedIds: string[];
-  login: (email: string, password: string) => void;
-  signup: (name: string, email: string, password: string) => void;
-  logout: () => void;
+  authLoading: boolean;
+  logout: () => Promise<void>;
   toggleSaved: (listingId: string) => void;
   isSaved: (listingId: string) => boolean;
 };
 
-const USER_KEY = "nova-stays-user";
 const SAVED_KEY = "nova-stays-saved";
 
 const AppStateContext = createContext<AppStateValue | null>(null);
@@ -51,20 +52,54 @@ type AppStateProviderProps = {
   children: ReactNode;
 };
 
+function mapSupabaseUser(authUser: SupabaseUser): User {
+  const metadataName =
+    typeof authUser.user_metadata?.name === "string" ? authUser.user_metadata.name.trim() : "";
+
+  return {
+    id: authUser.id,
+    name: metadataName || authUser.email?.split("@")[0] || "there",
+    email: authUser.email ?? ""
+  };
+}
+
 export function AppStateProvider({ children }: AppStateProviderProps) {
   const [user, setUser] = useState<User | null>(null);
   const [savedIds, setSavedIds] = useState<string[]>([]);
+  const [authLoading, setAuthLoading] = useState(true);
 
   useEffect(() => {
-    setUser(readLocalStorage<User | null>(USER_KEY, null));
     setSavedIds(readLocalStorage<string[]>(SAVED_KEY, []));
   }, []);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(USER_KEY, JSON.stringify(user));
-    }
-  }, [user]);
+    const supabase = createSupabaseBrowserClient();
+    let isMounted = true;
+
+    void supabase.auth.getSession().then(({ data, error }) => {
+      if (error) {
+        console.error("Unable to restore the Supabase session.", error);
+      }
+      if (isMounted) {
+        setUser(data.session?.user ? mapSupabaseUser(data.session.user) : null);
+        setAuthLoading(false);
+      }
+    });
+
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (isMounted) {
+        setUser(session?.user ? mapSupabaseUser(session.user) : null);
+        setAuthLoading(false);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -72,23 +107,13 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
     }
   }, [savedIds]);
 
-  const login = useCallback((email: string, password: string) => {
-    if (!email || !password) {
-      return;
+  const logout = useCallback(async () => {
+    const supabase = createSupabaseBrowserClient();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Unable to sign out of Supabase.", error);
+      throw error;
     }
-    const fallbackName = email.split("@")[0];
-    setUser({ name: fallbackName, email });
-  }, []);
-
-  const signup = useCallback((name: string, email: string, password: string) => {
-    if (!name || !email || !password) {
-      return;
-    }
-    setUser({ name, email });
-  }, []);
-
-  const logout = useCallback(() => {
-    setUser(null);
   }, []);
 
   const toggleSaved = useCallback((listingId: string) => {
@@ -107,8 +132,8 @@ export function AppStateProvider({ children }: AppStateProviderProps) {
   );
 
   const value = useMemo(
-    () => ({ user, savedIds, login, signup, logout, toggleSaved, isSaved }),
-    [user, savedIds, login, signup, logout, toggleSaved, isSaved]
+    () => ({ user, savedIds, authLoading, logout, toggleSaved, isSaved }),
+    [user, savedIds, authLoading, logout, toggleSaved, isSaved]
   );
 
   return <AppStateContext.Provider value={value}>{children}</AppStateContext.Provider>;
