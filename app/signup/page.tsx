@@ -41,7 +41,17 @@ export default function SignupPage() {
               });
 
               if (error) {
+                if (
+                  error.message.toLowerCase().includes("already registered") ||
+                  error.message.toLowerCase().includes("already exists")
+                ) {
+                  return { error: "An account with this email already exists. Please log in instead." };
+                }
                 return { error: error.message };
+              }
+
+              if (data.user && data.user.identities?.length === 0) {
+                return { error: "An account with this email already exists. Please log in instead." };
               }
 
               if (data.session) {

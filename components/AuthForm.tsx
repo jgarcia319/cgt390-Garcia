@@ -28,13 +28,37 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
   const submitForm = async (event: FormEvent) => {
     event.preventDefault();
     setError(null);
+
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+    if (isSignup && !trimmedName) {
+      setError("Enter your name.");
+      return;
+    }
+    if (!trimmedEmail) {
+      setError("Enter an email address.");
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      setError("Enter a valid email address.");
+      return;
+    }
+    if (!password) {
+      setError("Enter a password.");
+      return;
+    }
+    if (isSignup && password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
-     const result = await onSubmit(
+      const result = await onSubmit(
         isSignup
-          ? { name: name.trim(), email: email.trim(), password }
-          : { email: email.trim(), password }
+          ? { name: trimmedName, email: trimmedEmail, password }
+          : { email: trimmedEmail, password }
       );
 
       if (result?.error) {
@@ -46,12 +70,12 @@ export default function AuthForm({ mode, onSubmit }: AuthFormProps) {
         setError(result.message);
         return;
       }
-    } catch {
+    } catch (caughtError) {
+      console.error("Authentication form submission failed.", caughtError);
       setError("Something went wrong.");
     } finally {
       setIsSubmitting(false);
     }
-
   };
 
   return (
