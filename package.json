@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "mcp": "tsx mcp-server.ts"
   },
   "engines": {
     "node": ">=20.9.0"
@@ -14,6 +15,7 @@
   "dependencies": {
     "@supabase/ssr": "0.5.2",
     "@supabase/supabase-js": "2.56.0",
+    "@modelcontextprotocol/sdk": "^1.27.1",
     "next": "16.3.3",
     "react": "19.1.1",
     "react-dom": "19.1.1"
@@ -23,6 +25,8 @@
     "@types/react": "19.1.10",
     "@types/react-dom": "19.1.7",
     "critters": "^0.0.23",
-    "typescript": "5.9.2"
+    "tsx": "^4.20.6",
+    "typescript": "5.9.2",
+    "zod": "^4.1.12"
   }
 }
