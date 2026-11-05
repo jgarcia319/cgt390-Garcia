@@ -41,6 +41,7 @@ function invalidParameter(name: string, value: string): Response {
 }
 
 export function GET(request: Request) {
+  console.error("API /api/listings was called");
   const params = new URL(request.url).searchParams;
   const query = getSingleParam(params, "query");
   const line = getSingleParam(params, "line");
