@@ -1,0 +1,13 @@
+{
+  "servers": {
+    "nova-street-catalog": {
+      "type": "stdio",
+      "command": "npm.cmd",
+      "args": ["run", "mcp"],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "PRODUCT_API_BASE_URL": "http://localhost:3000"
+      }
+    }
+  }
+}
