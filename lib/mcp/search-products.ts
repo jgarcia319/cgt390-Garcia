@@ -65,6 +65,8 @@ export const searchProductsTool = {
       }
     }
 
+    console.error("API Request Reached");
+
     const response = await fetch(url, { method: "GET" });
     if (!response.ok) {
       const error = await response.text();
